@@ -1,0 +1,21 @@
+<!-- tasks/templates/tasks/task_list.html -->
+
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+    <h2>My Tasks</h2>
+    <a href="{% url 'task_create' %}">Create New Task</a>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <h3>{{ task.title }}</h3>
+                <p>Due: {{ task.due_date|default:"N/A" }}</p>
+                <p>Status: {% if task.completed %}Completed{% else %}Pending{% endif %}</p>
+                <a href="{% url 'task_detail' task.pk %}">View Details</a> |
+                <a href="{% url 'task_update' task.pk %}">Edit</a>
+            </li>
+        {% empty %}
+            <li>You have no tasks yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
